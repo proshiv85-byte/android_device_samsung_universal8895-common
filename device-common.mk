@@ -318,10 +318,6 @@ PRODUCT_PACKAGES += \
     libsqlite.vendor \
     secril_config_svc
 
-# SamsungDoze
-PRODUCT_PACKAGES += \
-    SamsungDoze
-
 # Seccomp filters
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/seccomp/mediaextractor-seccomp.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaextractor.policy \
