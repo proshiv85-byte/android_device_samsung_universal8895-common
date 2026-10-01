@@ -116,14 +116,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     disable_configstore
 
-# DRM
+# DRM (Samsung's Widevine blob is HIDL drm@1.1, not accepted at FCM level 7+)
 PRODUCT_PACKAGES += \
-    android.hardware.drm@1.0.vendor \
-    android.hardware.drm@1.1.vendor \
-    libfwdlockengine \
-    libdrmclearkeyplugin \
-    android.hardware.drm@1.0-service \
-    android.hardware.drm@1.0-impl \
     android.hardware.drm-service.clearkey
 
 # Fingerprint
@@ -151,8 +145,7 @@ PRODUCT_PACKAGES += \
 
 # Health
 PRODUCT_PACKAGES += \
-    android.hardware.health@2.1-impl \
-    android.hardware.health@2.1-service
+    android.hardware.health-service.samsung
 
 # HotwordEnrollement app permissions
 PRODUCT_COPY_FILES += \

@@ -48,12 +48,8 @@ vendor/etc/default_volume_tables.xml
 vendor/lib64/libbt-vendor.so
 
 # DRM
-vendor/lib/mediadrm/libwvdrmengine.so
 
 # DRM - Widevine
-vendor/bin/hw/android.hardware.drm@1.1-service.widevine
-vendor/etc/init/android.hardware.drm@1.1-service.widevine.rc
-vendor/lib/libwvhidl.so
 
 # Fingerprint
 vendor/lib/libbauthserver.so
