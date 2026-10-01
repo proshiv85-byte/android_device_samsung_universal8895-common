@@ -67,34 +67,20 @@ TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := cortex-a53.a57
 
-# Extracted with libbootimg
-BOARD_CUSTOM_BOOTIMG := true
-BOARD_CUSTOM_BOOTIMG_MK := hardware/samsung/mkbootimg.mk
+# Boot image
+# S-Boot needs a Samsung DTBH dt.img appended to a v0 boot image, with its size
+# in header offset 40 (where AOSP's mkbootimg writes header_version). AOSP builds
+# a plain v0 boot.img; tools/mkbootimg_dtbh.py then injects the DTBH image.
+BOARD_BOOT_HEADER_VERSION := 0
 BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_IMAGE_NAME := Image
-#BOARD_KERNEL_CMDLINE := The bootloader ignores the cmdline from the boot.img
-BOARD_KERNEL_SEPARATED_DT := true
-TARGET_CUSTOM_DTBTOOL := dtbhtoolExynos
+BOARD_KERNEL_CMDLINE := androidboot.hardware=samsungexynos8895
 BOARD_ROOT_EXTRA_FOLDERS += efs cpefs
-BOARD_USES_FULL_RECOVERY_IMAGE := true
 BOARD_RAMDISK_USE_XZ := true
-TARGET_KERNEL_ADDITIONAL_FLAGS := \
-    HOSTCFLAGS="-fuse-ld=lld -Wno-unused-command-line-argument" \
-    KBUILD_BUILD_USER=$(BUILD_USERNAME) KBUILD_BUILD_HOST=$(BUILD_HOSTNAME)
-
-# Kernel
-TARGET_KERNEL_CLANG_COMPILE := false
-TARGET_KERNEL_LLVM_BINUTILS := false
-TARGET_KERNEL_ARCH := arm64
-TARGET_KERNEL_HEADER_ARCH := arm64
-TOP_PATH := $(realpath $(TOP))
-KERNEL_TOOLCHAIN := $(TOP_PATH)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/aarch64-linux-android-4.9/bin
-TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-androidkernel-
-
-# Kernel config
-TARGET_KERNEL_SOURCE := kernel/samsung/universal8895
+# Kernel (prebuilt, built from the universal8895 4.4 kernel; see device/samsung/<device>-kernel)
+TARGET_NO_KERNEL := false
 
 # Use these flags if the board has a ext4 partition larger than 2gb
 BOARD_HAS_LARGE_FILESYSTEM := true
@@ -103,13 +89,17 @@ TARGET_USERIMAGES_USE_F2FS := true
 BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 
-# Partitions
-BOARD_BOOTIMAGE_PARTITION_SIZE     :=  41943040 #(40960 sda7)
-BOARD_RECOVERYIMAGE_PARTITION_SIZE :=  48234496 #(47104 sda8)
-BOARD_SYSTEMIMAGE_PARTITION_SIZE   :=  4508876800 #(4454400 sda17)
-BOARD_USERDATAIMAGE_PARTITION_SIZE :=  58556678144 #(57184256 sda24)
-BOARD_CACHEIMAGE_PARTITION_SIZE    :=  524288000 #(512000 sda18)
+# Partitions (Treble-style layout as left on the device by HadesROM's PIT)
+BOARD_BOOTIMAGE_PARTITION_SIZE     := 41943040     # BOOT     sda7
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 48234496     # RECOVERY sda8 (TWRP)
+BOARD_SYSTEMIMAGE_PARTITION_SIZE   := 6815744000   # SYSTEM   sda17
+BOARD_VENDORIMAGE_PARTITION_SIZE   := 629145600    # VENDOR   sda18
+BOARD_CACHEIMAGE_PARTITION_SIZE    := 157286400    # CACHE    sda21
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 55248924672  # USERDATA sda27
 BOARD_FLASH_BLOCK_SIZE := 4096
+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+TARGET_COPY_OUT_VENDOR := vendor
+TARGET_NO_RECOVERY := true
 
 # Manifest
 PRODUCT_ENFORCE_VINTF_MANIFEST_OVERRIDE := true
@@ -117,9 +107,6 @@ DEVICE_MANIFEST_FILE := $(COMMON_PATH)/manifest.xml
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \
     $(COMMON_PATH)/framework_compatibility_matrix.xml \
     hardware/samsung/vintf/samsung_framework_compatibility_matrix.xml
-
-# Vendor separation
-TARGET_COPY_OUT_VENDOR := system/vendor
 
 # Device Tree
 BOARD_USES_DT := true
@@ -141,8 +128,6 @@ BOARD_HAVE_BLUETOOTH := true
 # Backlight
 BACKLIGHT_PATH := "/sys/class/backlight/panel/brightness"
 
-# Recovery
-TARGET_RECOVERY_FSTAB := $(COMMON_PATH)/ramdisk/etc/fstab.samsungexynos8895
 
 # Wifi
 TARGET_USES_64_BIT_BCMDHD        := true
@@ -166,7 +151,6 @@ WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true
 BOARD_HAVE_SAMSUNG_WIFI          := true
 
 # Sepolicy
-include device/lineage/sepolicy/exynos/sepolicy.mk
 BOARD_SEPOLICY_TEE_FLAVOR := mobicore
 include device/samsung_slsi/sepolicy/sepolicy.mk
 SELINUX_IGNORE_NEVERALLOWS := true

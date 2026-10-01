@@ -175,10 +175,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.light-service.samsung
 
-# Livedisplay
-PRODUCT_PACKAGES += \
-    vendor.lineage.livedisplay-service.sysfs
-
 # LPM
 PRODUCT_PACKAGES += \
     libsuspend
