@@ -37,6 +37,8 @@ $(call soong_config_set_bool,samsungCameraVars,usage_64bit,true)
 
 # Display
 TARGET_SCREEN_DENSITY := 480
+# Mali gralloc blob only provides mapper/allocator 2.0
+$(call soong_config_set_bool,libui,legacy_gralloc,true)
 
 # Fingerprint
 TARGET_SEC_FP_HAS_FINGERPRINT_GESTURES := true
