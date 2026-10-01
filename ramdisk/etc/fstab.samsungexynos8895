@@ -6,9 +6,10 @@
 /dev/block/platform/11120000.ufs/by-name/BOOT           /boot       emmc    defaults                                                                                                          defaults
 /dev/block/platform/11120000.ufs/by-name/RECOVERY       /recovery   emmc    defaults                                                                                                          defaults
 /dev/block/platform/11120000.ufs/by-name/SYSTEM         /system     ext4    ro,errors=panic,noload                                                                                            wait,first_stage_mount
+/dev/block/platform/11120000.ufs/by-name/VENDOR         /vendor     ext4    ro,errors=panic,noload                                                                                            wait,first_stage_mount
 /dev/block/platform/11120000.ufs/by-name/CACHE          /cache      ext4    noatime,nosuid,nodev,noauto_da_alloc,discard,journal_checksum,data=ordered,errors=panic                           wait,check
-/dev/block/platform/11120000.ufs/by-name/USERDATA       /data       ext4    noatime,nosuid,nodev,noauto_da_alloc,discard,journal_checksum,data=ordered,errors=panic                                                      wait,check,fileencryption=aes-256-xts
-/dev/block/platform/11120000.ufs/by-name/USERDATA       /data       f2fs    noatime,nosuid,nodev,discard,fsync_mode=nobarrier,user_xattr                                                      wait,check,fileencryption=aes-256-xts
+/dev/block/platform/11120000.ufs/by-name/USERDATA       /data       ext4    noatime,nosuid,nodev,noauto_da_alloc,discard,journal_checksum,data=ordered,errors=panic                                                      wait,check,fileencryption=aes-256-xts:aes-256-cts:v1
+/dev/block/platform/11120000.ufs/by-name/USERDATA       /data       f2fs    noatime,nosuid,nodev,discard,fsync_mode=nobarrier,user_xattr                                                      wait,check,fileencryption=aes-256-xts:aes-256-cts:v1
 /dev/block/platform/11120000.ufs/by-name/EFS            /efs        ext4    noatime,nosuid,nodev,noauto_da_alloc,discard,journal_checksum,data=ordered,errors=panic                           wait,first_stage_mount
 /dev/block/platform/11120000.ufs/by-name/CPEFS          /cpefs      ext4    ro,noload,noatime,nosuid,nodev                                                                                              wait,nofail
 
