@@ -1,0 +1,18 @@
+# /dev/mali0
+allow priv_app gpu_device:chr_file rw_file_perms;
+
+allow priv_app debugfs_ion:dir search;
+allow priv_app debugfs_mali:dir search;
+allow priv_app debugfs_mali_mem:dir search;
+
+allow priv_app sysfs_zram:file r_file_perms;
+
+allow priv_app qemu_hw_prop:file { read open };
+allow priv_app vr_manager_service:service_manager find;
+allow priv_app mnt_pass_through_file:dir search;
+allow priv_app mnt_pass_through_file:dir getattr;
+
+allow priv_app keyguard_config_prop:file { open read getattr };
+allow priv_app storage_config_prop:file read;
+allow priv_app media_userdir_file:dir getattr;
+allow priv_app ota_package_file:dir open;

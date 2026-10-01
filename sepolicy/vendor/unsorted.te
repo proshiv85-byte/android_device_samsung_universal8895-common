@@ -1,0 +1,168 @@
+#============= apexd ==============
+allow apexd vendor_file:file read;
+
+#============= audioserver ==============
+allow audioserver vendor_default_prop:file read;
+
+#============= bootanim ==============
+
+#!!!! This avc is a constraint violation.  You would need to modify the attributes of either the source or target types to allow this access.
+#Constraint rule: 
+#       mlsconstrain dir { read getattr search } ((t2 == app_data_file_type -Fail-)  or (l1 dom l2 -Fail-)  or (t1 == mlstrustedsubject -Fail-)  or (t2 == mlstrustedobject -Fail-)  or (t1 == mlsvendorcompat -Fail-)  and (t2 == system_data_file)  or (t2 == user_profile_root_file -Fail-) ); Constraint DENIED
+
+#       Possible cause is the source level (s0) and target level (s0:c512,c768) are different.
+# allow bootanim system_data_file:dir search;
+
+#============= dmesgd ==============
+# allow dmesgd kmsg_device:chr_file read;
+
+#============= gpsd ==============
+
+#!!!! This avc is a constraint violation.  You would need to modify the attributes of either the source or target types to allow this access.
+#Constraint rule: 
+#       mlsconstrain dir { read getattr search } ((t2 == app_data_file_type -Fail-)  or (l1 dom l2 -Fail-)  or (t1 == mlstrustedsubject -Fail-)  or (t2 == mlstrustedobject -Fail-)  or (t1 == mlsvendorcompat -Fail-)  and (t2 == system_data_file)  or (t2 == user_profile_root_file -Fail-) ); Constraint DENIED
+
+#       Possible cause is the source level (s0) and target level (s0:c512,c768) are different.
+allow gpsd system_data_file:dir search;
+
+#============= hal_fingerprint_default ==============
+allow hal_fingerprint_default default_prop:file read;
+
+#============= hal_graphics_composer_default ==============
+allow hal_graphics_composer_default zygote:fd use;
+
+#============= hal_usb_default ==============
+allow hal_usb_default sysfs_virtual:file getattr;
+
+#============= hwservicemanager ==============
+#allow hwservicemanager vendor_file:file read;
+
+#============= init ==============
+#allow init blkid_exec:file getattr;
+allow init dnsmasq_exec:file getattr;
+#allow init incident_exec:file getattr;
+#allow init incident_helper_exec:file getattr;
+#allow init migrate_legacy_obb_data_exec:file getattr;
+allow init netutils_wrapper_exec:file getattr;
+#allow init ot_ctl_exec:file getattr;
+#allow init preopt2cachename_exec:file getattr;
+allow init rs_exec:file getattr;
+allow init runas_exec:file getattr;
+allow init sdcardd_exec:file getattr;
+allow init sgdisk_exec:file getattr;
+allow init simpleperf_app_runner_exec:file getattr;
+allow init tcpdump_exec:file getattr;
+#allow init tradeinmode_exec:file getattr;
+allow init vold_prepare_subdirs_exec:file getattr;
+
+#============= installd ==============
+allow installd vendor_file:file read;
+
+#============= kernel ==============
+allow kernel vendor_file:file getattr;
+
+#============= lhd ==============
+
+#!!!! This avc is a constraint violation.  You would need to modify the attributes of either the source or target types to allow this access.
+#Constraint rule: 
+#       mlsconstrain dir { read getattr search } ((t2 == app_data_file_type -Fail-)  or (l1 dom l2 -Fail-)  or (t1 == mlstrustedsubject -Fail-)  or (t2 == mlstrustedobject -Fail-)  or (t1 == mlsvendorcompat -Fail-)  and (t2 == system_data_file)  or (t2 == user_profile_root_file -Fail-) ); Constraint DENIED
+
+#       Possible cause is the source level (s0) and target level (s0:c512,c768) are different.
+allow lhd system_data_file:dir search;
+
+#============= priv_app ==============
+allow priv_app ota_package_file:dir read;
+allow priv_app qemu_hw_prop:file getattr;
+allow priv_app storage_config_prop:file open;
+
+#============= servicemanager ==============
+#allow servicemanager vendor_file:file read;
+
+#============= surfaceflinger ==============
+allow surfaceflinger zygote:binder call;
+
+#============= system_server ==============
+allow system_server sysfs_virtual:file open;
+allow system_server vendor_file:file read;
+
+#============= vendor_init ==============
+allow vendor_init cgroup:file getattr;
+
+#============= vold ==============
+allow vold sysfs_virtual:file write;
+allow vold vendor_file:file read;
+
+#============= vold_prepare_subdirs ==============
+allow vold_prepare_subdirs vendor_file:file read;
+
+#============= zygote ==============
+allow zygote activity_task_service:service_manager find;
+#allow zygote custom_version_prop:file { open read };
+allow zygote gpuservice:binder call;
+allow zygote hal_graphics_allocator_default:fd use;
+allow zygote hal_graphics_allocator_service:service_manager find;
+allow zygote hal_graphics_composer_default:fd use;
+#allow zygote safety_center_service:service_manager find;
+allow zygote surfaceflinger:fd use;
+allow zygote system_data_file:dir remove_name;
+allow zygote system_data_file:file { create rename write };
+allow zygote system_server:unix_stream_socket { read write };
+allow zygote usagestats_service:service_manager find;
+allow zygote usb_uvc_enabled_prop:file getattr;
+allow zygote user_profile_data_file:file { getattr lock };
+allow zygote vendor_security_patch_level_prop:file read;
+
+#============= apexd ==============
+allow apexd vendor_file:file { getattr open };
+
+#============= audioserver ==============
+allow audioserver vendor_default_prop:file { getattr open };
+
+#============= hal_fingerprint_default ==============
+allow hal_fingerprint_default default_prop:file { getattr open };
+
+#============= hwservicemanager ==============
+allow hwservicemanager vendor_file:file { getattr open read };
+
+#============= installd ==============
+allow installd vendor_file:file getattr;
+
+#============= kcmdlinectrl ==============
+#allow kcmdlinectrl sysfs_dt_firmware_android:dir { open read };
+#allow kcmdlinectrl sysfs_dt_firmware_android:file { getattr open read };
+
+#============= kernel ==============
+allow kernel app_efs_file:file read;
+allow kernel sensor_factoryapp_efs_file:file read;
+allow kernel sysfs_virtual:file read;
+allow kernel vendor_file:file { open read };
+
+#============= lhd ==============
+
+#!!!! This avc is a constraint violation.  You would need to modify the attributes of either the source or target types to allow this access.
+#Constraint rule: 
+#       mlsconstrain dir { read getattr search } ((t2 == app_data_file_type -Fail-)  or (l1 dom l2 -Fail-)  or (t1 == mlstrustedsubject -Fail-)  or (t2 == mlstrustedobject -Fail-)  or (t1 == mlsvendorcompat -Fail-)  and (t2 == system_data_file)  or (t2 == user_profile_root_file -Fail-) ); Constraint DENIED
+
+#       Possible cause is the source level (s0) and target level (s0:c512,c768) are different.
+allow lhd system_data_file:dir search;
+
+#============= misctrl ==============
+#allow misctrl sysfs_dt_firmware_android:dir { open read };
+#allow misctrl sysfs_dt_firmware_android:file { getattr open read };
+
+#============= secure_element ==============
+allow secure_element system_data_file:file open;
+
+#============= servicemanager ==============
+allow servicemanager vendor_file:file { getattr open read };
+
+#============= system_server ==============
+allow system_server debugfs:file { getattr open read };
+allow system_server sysfs_virtual:file getattr;
+allow system_server vendor_file:file getattr;
+
+#============= vold ==============
+allow vold vendor_file:file { getattr open };
+
+#============= vold_prepare_subdirs ==============
+allow vold_prepare_subdirs vendor_file:file { getattr open };

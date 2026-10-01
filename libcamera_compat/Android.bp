@@ -1,0 +1,29 @@
+cc_library_shared {
+    name: "libcamera_compat",
+    vendor: true,
+
+    srcs: [
+        "CameraParameters.cpp",
+        "CameraMetadata.cpp",
+        "VendorTagDescriptor.cpp",
+    ],
+
+    shared_libs: [
+        "libhardware",
+        "liblog",
+        "libcamera_metadata",
+        "libutils",
+        "libcutils",
+        "libdl",
+        "libsync",
+        "libbinder",
+    ],
+
+    include_dirs: [
+        "system/media/camera/include",
+    ],
+
+    header_libs: [
+        "libnativebase_headers",
+    ],
+}

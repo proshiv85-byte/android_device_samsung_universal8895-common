@@ -1,0 +1,68 @@
+allow zygote servicemanager:binder { call };
+allow zygote system_server:binder { call transfer };
+allow system_server zygote:process { setsched };
+allow kernel sysfs_virtual:dir { search };
+allow kernel sysfs_virtual:file { open };
+
+allow zygote untrusted_app:binder call;
+allow untrusted_app zygote:binder call;
+allow zygote surfaceflinger:unix_stream_socket { read write };
+allow surfaceflinger zygote:binder transfer;
+allow zygote surfaceflinger:binder { call transfer };
+allow surfaceflinger zygote:fd use;
+allow zygote vendor_file:file { read open getattr };
+
+allow zygote {
+    activity_service
+    audio_service
+    autofill_service
+    batterystats_service
+    bluetooth_manager_service
+    content_capture_service
+    device_policy_service
+    device_state_service
+    gpu_service
+    location_service
+    media_router_service
+    media_session_service
+    mediaserver_service
+    netpolicy_service
+    netstats_service
+    registry_service
+    restrictions_service
+    radio_service
+    sensitive_content_protection_service
+    slice_service
+    storagestats_service
+    surfaceflinger_service
+    thermal_service
+    usb_service
+    vibrator_manager_service
+    voiceinteraction_service
+    wifi_service
+    wifip2p_service
+    wifiscanner_service
+}:service_manager find;
+
+allow zygote {
+    hal_graphics_allocator_hwservice
+    hal_graphics_mapper_hwservice
+    hal_configstore_ISurfaceFlingerConfigs
+}:hwservice_manager find;
+
+allow zygote usb_uvc_enabled_prop:file { read open };
+allow zygote gpu_device:chr_file { read write ioctl };
+allow zygote system_data_file:dir { write add_name create };
+allow zygote user_profile_data_file:dir { write add_name };
+allow zygote user_profile_data_file:file { read write open create };
+allow hal_usb_default sysfs_virtual:file { read open };
+
+allow system_server zygote:binder { call transfer };
+allow hwservicemanager zygote:binder transfer;
+allow zygote hal_graphics_allocator_default:binder call;
+allow zygote hwservicemanager:binder call;
+
+allow zygote audioserver:binder { call transfer };
+
+allow system_server vendor_file:file { read open };
+allow installd vendor_file:file { read open };
