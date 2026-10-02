@@ -171,3 +171,6 @@
 
 # Legacy ION (Mali/Exynos gralloc blobs)
 /dev/ion                 u:object_r:ion_device:s0
+
+# /metadata (HIDDEN partition)
+/dev/block/platform/11120000\.ufs/by-name/HIDDEN   u:object_r:metadata_block_device:s0
