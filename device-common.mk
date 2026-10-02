@@ -325,7 +325,7 @@ PRODUCT_SOONG_NAMESPACES += \
     hardware/samsung \
     hardware/google/interfaces \
     hardware/google/pixel \
-    hardware/samsung/aidl/power-libperfmgr
+    hardware/google/pixel/power-libperfmgr
 
 # Shims
 PRODUCT_PACKAGES += \
