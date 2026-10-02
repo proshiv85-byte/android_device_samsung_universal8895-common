@@ -1,0 +1,4 @@
+# The Exynos gralloc/Mali blobs allocate and sync buffers through legacy ION.
+# Android 17 dropped the platform rules for ion_device (DMA-BUF heaps replaced
+# it), so grant read/ioctl again as Android 13-16 did.
+allow domain ion_device:chr_file r_file_perms;

@@ -168,3 +168,6 @@
 
 # Wireless regulatory domain updater
 /(system/vendor|vendor)/bin/wireless-regdomain.sh    u:object_r:hal_wifi_supplicant_default_exec:s0
+
+# Legacy ION (Mali/Exynos gralloc blobs)
+/dev/ion                 u:object_r:ion_device:s0
