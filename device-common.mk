@@ -107,10 +107,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/configs/external_camera_config.xml:$(TARGET_COPY_OUT_VENDOR)/etc/external_camera_config.xml
 
-# ConfigStore
-PRODUCT_PACKAGES += \
-    disable_configstore
-
 # DRM (Samsung's Widevine blob is HIDL drm@1.1, not accepted at FCM level 7+)
 PRODUCT_PACKAGES += \
     android.hardware.drm-service.clearkey
