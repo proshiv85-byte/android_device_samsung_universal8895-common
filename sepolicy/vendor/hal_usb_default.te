@@ -1,6 +1,8 @@
 allow hal_usb_default sysfs_virtual:dir search;
 
 # Legacy CCIC fallback in the Samsung USB HAL: read the gadget connection state
+allow hal_usb_default sysfs_android_usb:dir search;
+allow hal_usb_default sysfs_android_usb:lnk_file read;
 allow hal_usb_default sysfs_android_usb:file r_file_perms;
 allow hal_usb_default sysfs_virtual:dir search;
 allow hal_usb_default sysfs_virtual:file r_file_perms;
