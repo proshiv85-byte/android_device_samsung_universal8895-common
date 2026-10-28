@@ -508,12 +508,14 @@ on boot
     write /dev/cpuctl/bg_abnormal/cpu.cfs_period_us 20000
     write /dev/cpuctl/bg_abnormal/cpu.cfs_quota_us 10000
 
+    # The cpuset cgroup is mounted with noprefix: files are "cpus"/"mems",
+    # not "cpuset.cpus"/"cpuset.mems".
     mkdir /dev/cpuset/cached
-    write /dev/cpuset/cached/cpuset.cpus 0-2
+    write /dev/cpuset/cached/cpus 0-3
     copy /dev/cpuset/mems /dev/cpuset/cached/mems
     mkdir /dev/cpuset/abnormal
-    write /dev/cpuset/abnormal/cpuset.cpus 0-2
-    copy /dev/cpuset/cpuset.mems /dev/cpuset/abnormal/mems
+    write /dev/cpuset/abnormal/cpus 0-3
+    copy /dev/cpuset/mems /dev/cpuset/abnormal/mems
 
     # change permissions for BarTender's cpusets we'll touch at runtime
     chown system system /dev/cpuset/cached
@@ -532,23 +534,19 @@ on boot
     chown system system /dev/cpuset/foreground/cpus
     chown system system /dev/cpuset/background/cpus
     chown system system /dev/cpuset/system-background/cpus
-    chown system system /dev/cpuset/surfaceflinger/cpus
+    chown system system /dev/cpuset/restricted/cpus
     chmod 664 /dev/cpuset/top-app/cpus
     chmod 664 /dev/cpuset/foreground/cpus
     chmod 664 /dev/cpuset/background/cpus
     chmod 664 /dev/cpuset/system-background/cpus
-    chmod 664 /dev/cpuset/surfaceflinger/cpus
-    write /dev/cpuset/top-app/cpuset.cpus 0-7
-    write /dev/cpuset/top-app/cpuset.mems 0
-    write /dev/cpuset/top-app/cpuset.family_boost 1
-    write /dev/cpuset/foreground/cpuset.cpus 0-2,4-7
-    write /dev/cpuset/foreground/cpuset.mems 0
-    write /dev/cpuset/background/cpuset.cpus 0-1
-    write /dev/cpuset/background/cpuset.mems 0
-    write /dev/cpuset/system-background/cpuset.cpus 0-2
-    write /dev/cpuset/system-background/cpuset.mems 0
-    write /dev/cpuset/surfaceflinger/cpuset.cpus 0-2
-    write /dev/cpuset/surfaceflinger/cpuset.mems 0
+    chmod 664 /dev/cpuset/restricted/cpus
+    # Keep background work off the big cluster (4-7).
+    write /dev/cpuset/top-app/cpus 0-7
+    write /dev/cpuset/top-app/family_boost 1
+    write /dev/cpuset/foreground/cpus 0-7
+    write /dev/cpuset/background/cpus 0-3
+    write /dev/cpuset/system-background/cpus 0-3
+    write /dev/cpuset/restricted/cpus 0-3
 
 # ZRAM setup
     write /sys/block/zram0/comp_algorithm lz4
@@ -953,6 +951,8 @@ service faced /system/bin/faced
     group system
 
 on property:sys.boot_completed=1
+    # power-libperfmgr waits for this before it applies any hints
+    setprop vendor.powerhal.init 1
     swapon_all /vendor/etc/fstab.samsungexynos8895
     setprop security.semdaemonfinish 0
     start sem_daemon

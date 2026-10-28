@@ -196,6 +196,15 @@ PRODUCT_PACKAGES += \
 ## the preloading and non-preloading builds, please check the above issue.
 PRODUCT_PROPERTY_OVERRIDES += ro.zygote.disable_gl_preload=1
 
+# Dexpreopt: AOT-compile the always-running UI apps, otherwise they ship
+# as "verify" and run JIT-only.
+PRODUCT_DEXPREOPT_SPEED_APPS += \
+    Launcher3QuickStep \
+    Settings \
+    SystemUI
+
+PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed-profile
+
 # ADB Debug
 #PRODUCT_PROPERTY_OVERRIDES += \
 #    persist.sys.usb.config=mtp,adb \
